@@ -87,3 +87,11 @@ categories:
 |modulate|조절하다, 조를 바꾸다|
 |conduct|하다, 지휘하다, 안내하다|
 |trim|다듬다, 잘라 내다|
+|keen|열망하는, 열정적인|
+|complimentary|무료의, 칭찬하는|
+|claim|주장하다, 얻다|
+|inspect|점검하다, 사찰하다|
+|customarily|습관적으로, 관례상|
+|formally|공식적으로|
+|proximity|가까움|
+|vacancy|결원, 공석, 빈 방|
