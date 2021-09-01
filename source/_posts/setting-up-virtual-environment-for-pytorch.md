@@ -24,6 +24,8 @@ tags:
 {% gdemo_terminal 'conda create --name pytorch_env python=3' '60px' 'Zerohertz' '300' '>' 'terminal1' 'applescript' %}
 {% endgdemo_terminal %}
 
+</br>
+
 > To activate environment
 
 ~~~python
