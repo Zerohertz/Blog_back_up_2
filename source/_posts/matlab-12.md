@@ -3,6 +3,7 @@ title: MatLAB(12)
 date: 2020-07-17 16:07:02
 categories:
 - MatLAB
+- Basic
 tags:
 - MatLAB
 - Deep Learning

@@ -3,6 +3,7 @@ title: Python Source
 date: 2019-08-19 14:33:00
 categories:
 - Python
+- Basic
 tags:
 - Python
 thumbnail: https://user-images.githubusercontent.com/42334717/63241394-80967780-c28e-11e9-939d-2cf7d397c2ec.png

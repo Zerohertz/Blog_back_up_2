@@ -3,6 +3,7 @@ title: R final-term
 date: 2020-01-16 12:36:15
 categories:
 - R
+- Basic
 tags:
 - R
 - Statistics

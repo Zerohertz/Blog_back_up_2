@@ -4,7 +4,8 @@ date: 2018-10-25 13:26:50
 redirect_from:
 - /2018/10/25/exporting-to-unreal-engine-at-3ds-max-by-datasmith/
 categories:
-- Etc.
+- C, C++
+- Unreal Engine
 tags:
 - VR Project
 - Unreal Engine

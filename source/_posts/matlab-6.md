@@ -3,6 +3,7 @@ title: MatLAB(6)
 date: 2019-11-13 14:54:38
 categories:
 - MatLAB
+- Basic
 tags:
 - MatLAB
 - Simulink

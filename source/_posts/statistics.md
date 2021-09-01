@@ -3,6 +3,7 @@ title: Statistics
 date: 2020-01-07 14:03:55
 categories:
 - R
+- Basic
 tags:
 - R
 - Statistics

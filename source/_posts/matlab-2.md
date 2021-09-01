@@ -3,6 +3,7 @@ title: MatLAB(2)
 date: 2019-10-02 14:35:16
 categories:
 - MatLAB
+- Basic
 tags:
 - MatLAB
 thumbnail: https://user-images.githubusercontent.com/42334717/66022101-d6b23800-e527-11e9-8841-af59aea14106.png

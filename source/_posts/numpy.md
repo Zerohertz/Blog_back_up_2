@@ -3,6 +3,7 @@ title: Numpy
 date: 2021-02-28 16:12:55
 categories:
 - Python
+- Basic
 tags:
 - Machine Learning
 - Deep Learning

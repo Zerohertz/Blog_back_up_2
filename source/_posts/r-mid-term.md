@@ -3,6 +3,7 @@ title: R mid-term
 date: 2020-01-06 01:06:20
 categories:
 - R
+- Basic
 tags:
 - R
 - Statistics

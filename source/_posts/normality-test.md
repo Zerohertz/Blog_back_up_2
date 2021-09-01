@@ -3,6 +3,7 @@ title: Normality test
 date: 2020-01-10 13:57:42
 categories:
 - R
+- Basic
 tags:
 - R
 - Statistics

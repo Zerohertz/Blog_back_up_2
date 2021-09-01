@@ -3,6 +3,7 @@ title: Source code for extracting CIs
 date: 2020-03-18 12:14:38
 categories:
 - R
+- Feature Engineering
 tags:
 - Machine Learning
 - PHM
