@@ -7,7 +7,7 @@ categories:
 tags:
 - TensorFlow
 - Machine Learning
-- DNN
+- Deep Learning
 thumbnail: https://user-images.githubusercontent.com/42334717/62850969-913f6e80-bd1f-11e9-9fbb-314d20e6b1a2.png
 ---
 # TensorFlow를 이용한 간단한 곱셈 프로그램

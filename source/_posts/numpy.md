@@ -5,7 +5,7 @@ categories:
 - Python
 tags:
 - Machine Learning
-- DNN
+- Deep Learning
 - Statistics
 - Python
 mathjax: true

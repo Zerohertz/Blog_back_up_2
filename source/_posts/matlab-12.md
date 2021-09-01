@@ -5,7 +5,7 @@ categories:
 - MatLAB
 tags:
 - MatLAB
-- DNN
+- Deep Learning
 ---
 # 제어문
 

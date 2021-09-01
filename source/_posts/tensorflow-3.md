@@ -7,7 +7,7 @@ categories:
 tags:
 - TensorFlow
 - Machine Learning
-- DNN
+- Deep Learning
 thumbnail: https://user-images.githubusercontent.com/42334717/63152470-e55f9100-c046-11e9-902d-0812bc00e6f1.png
 ---
 # MNIST 데이터셋

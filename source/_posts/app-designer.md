@@ -5,7 +5,7 @@ categories:
 - MatLAB
 tags:
 - Machine Learning
-- DNN
+- Deep Learning
 - Signal Processing
 - MatLAB
 - PHM

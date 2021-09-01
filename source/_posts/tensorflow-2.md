@@ -7,7 +7,7 @@ categories:
 tags:
 - TensorFlow
 - Machine Learning
-- DNN
+- Deep Learning
 thumbnail: https://user-images.githubusercontent.com/42334717/62998530-caeeb180-bea6-11e9-99b4-c9e33773807a.png
 ---
 # Clustering
