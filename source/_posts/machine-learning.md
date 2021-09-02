@@ -69,13 +69,22 @@ mathjax: true
     + Zero-One: $I[y\neq\phi]=I[yf(x)<0]$
     + Logistic: $log\lbrace1+exp(-yf(x))\rbrace$
     + Exponential: $exp(-yf(x))$
-    + Hinge: $max\lbrace0,1-yf(x)\rbrace$
-    + $\psi$: $I[yf(x)\leq0]+max\lbrace0,1-yf(x)\rbrace I[yf(x)>0]$
+    + Hinge: $\max\lbrace0,1-yf(x)\rbrace$
+    + $\psi$: $I[yf(x)\leq0]+\max\lbrace0,1-yf(x)\rbrace I[yf(x)>0]$
 + Risk Function: $R(f)=E_{(y,x)}L(y,f(x))$
   + Long-Term average of losses or costs
     + Square Loss: $E(y-f(x))^2$
     + Zero-One Loss: $EI[y\neq \phi(x)]=P[y\neq \phi(x)]$
     + Condition Risk: $R(f)=E_{y|x}[L(y,f(x))|x]$
++ Learning $f\in\mathcal{F}$
+  + Learning (Estimating, Training) an optimal $f\in\mathcal{F}$ or $R(f)=E_x\lbrace E\_{y|x}L(y,f(x))|x\rbrace\geq R(\hat f),\forall f\in\mathcal{F}$
+  + Example)
+    + Square loss with $f(x)=x^T\beta$
+      + $\hat\beta=E(xx^T)^{-1}E(xy)$
+    + Zero-one loss with $\phi(x)$
+      + $\hat\phi(x)=arg\max_kP(y=k|x)$
+        + $\hat\phi$: Bayes Classifier
+        + $R(\hat\phi)$: Bayes Risk
 + Empirical Risk Minimization: $\hat f=arg\min_{f\in \mathcal{F}}R_n(f)$
   + Empirical Risk Function: $R_n(f)=\Sigma^n_{i=1}L(y_i,f(x_i))/n$
     + Training Sample ($y_i,x_i$), $i\leq n$: Independent samples / observations of $(y,x)$
@@ -110,7 +119,7 @@ $
 
 ### Grid Search
 
-+ Non-Iterative Grid Search Alhorithm: $x^*\approx arg\min_{z\in z_k=a+k(b-a)/m|k=0,...,m}f(z)$
++ Non-Iterative Grid Search Alhorithm: $x^*\approx arg\min_{z\in\lbrace z_k=a+k(b-a)/m|k=0,...,m\rbrace}f(z)$
 + Iterative Grid Search Algorithm: for $n=1,2,...$
   + $
 \begin{equation}
@@ -184,7 +193,7 @@ $
   + Modified Newton's Method: $D_n=\nabla^2f(x_0)$ for some $x_0$
   + Diagonally Scaled Steepest Descent: $D_n=[diag(\nabla^2f(x_n))]^{-1}$
 
-### Step Size of Gradient Descent Algorithm
+#### Step Size of Gradient Descent Algorithm
 
 + Limited Minimization Rule
   + $f(x_n+\alpha_nd_n)=\min_{\alpha\in[0,s]}f(x_n+\alpha d_n)$, for some $s>0$
@@ -528,7 +537,46 @@ $
 
 ## Artificial Neural Network
 
++ Regression function with one hidden layer
+  + $y\in\mathcal{Y}\subset\mathbb{R}^k,f(x)=g(a(h(x)))$
+  + $h$: Non-linear transformation from $x$ to hidden units via an activation function $\sigma$
+    + $h(x)=(h_1(x),...,h_m(x))^T,h_j(x)=\sigma(x^Tw_j+b_j),\ j\leq m$
+    + Sigmoid: $\sigma(t)=1/(1+exp(-t))$
+    + ReLu: $\sigma(t)=max\lbrace0,t\rbrace$
+    + RBF: $\sigma(t)=exp(-v^2/2)$
+  + $a$: Linear combinations of hidden units
+    + $a(h)=(a_1(h),...,a_k(h))^T,a_s(h)=h^Tv_s+c_s,\ s\leq k$
+  + $g$: Transformation from $a$ to outputs via output functions $g_s,\ s\leq k$
+    + $g(a)=(g_1(a),...,g_k(a))^T$
+    + Regression, Identity: $g_s(a)=a_s$
+    + Classification, Softmax: $g_s(a)=exp(a_s)/\Sigma^k_{I=1}exp(a_I)$
+### Empirical Risk Function
++ $R_n(\theta)=\Sigma^n_{i=1}L(y_i,f(x_i))$
++ $(p+1)\times m+(m+1)\times k$ Parameters
+  + $\theta=(W,b,V,c)$
+  + $W=(w_1,...,w_m)^T,b=(b_1,...,b_m)^T$
+  + $V=(v_1,...,v_k)^T,c=(c_1,...,c_k)^T$
++ Loss Function
+  + Regression: $L(y,f(x))=\Sigma^k_{s=1}(y_s-f_s(x))^2$
+  + Classification: $L(y,f(x))=-\Sigma^k_{s=1}\lbrace y_slog(f_s(x))\rbrace$
++ Non-Convex (Non-Differentiable) Optimization
++ (Sub) Gradient Descent Algorithm
+  + $\theta_{t+1}=\theta_t-\alpha_t\partial R_n(\theta_t)/\partial\theta$
+
+### Gradient Calculation (Backpropagation)
++ Risk Function Structure
+  + $R=L(y,f)$
+  + $f=g(a)$
+  + $a=Vh+b$
+  + $h=(\sigma(x^Tw_j+b_j),\ j\leq m)^T$
++ Chain Rule w.r.t. $v_{sl}$
+  + $\partial R/\partial v_{sl}=\nabla_fL\times\nabla_ag\times\nabla_{v_{sl}}a=\lbrace\nabla_fL\times\nabla_{a_s}g\rbrace\times h_I$
++ Chain Rule w.r.t. $w_{jt}$
+  + $\partial R/\partial w_{jt}=\nabla_fL\times\Sigma^k_{s=1}\nabla_{a_s}g\times v_{sj}\times\nabla_{w_{jt}}h_j=\lbrace\Sigma^k_{s=1}\lbrace\nabla_fL\times\nabla_{a_s}g\rbrace\times v_{sj}\times\sigma'(x^Tw_j+b_j)\rbrace x_t$
+
 ## Tree and Ensemble
+
+
 ***
 
 # Model Comparison
