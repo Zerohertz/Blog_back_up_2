@@ -221,9 +221,9 @@ d_{nk}=
 $
       + $\tilde x_{nj}=(x_{(n+1)1},...,x_{(n+1)(j=1)},x_{nj},x_{n(j+1)},...,x_{np})$
 + Inner Cycling Minimization
-  + Closed Form vs Univariate Minimization
+  + Closed Form vs. Univariate Minimization
   + Invariance to the order of coordinates
-  + Individual Corrdinate vs A Block of Coordinates
+  + Individual Corrdinate vs. A Block of Coordinates
   + `one-at-a-time` not `all-at-once`
 + Convergence Cases
   + $f$: Convex and Differentiable $\rightarrow$ Always converges to a local minimizer
@@ -576,7 +576,209 @@ $
 
 ## Tree and Ensemble
 
+### Decision Tree
+
++ Regression Function
+  + $f(x)=\Sigma^M_{m=1}f_m(x)I[x\in R_m]$
+  + $M$: Numbers of Rectangles
+  + $R_m,m\leq M$: Disjoint Rectangular Areas in $\mathbb{R}^p$ (Terminal Nodes)
+  + $f_m(x),m\leq M$: Local Regression Functions of Interest
++ Empirical Risk Function with A Loss $L$
+  + $R_n(f_m,R_m,m\leq M)=\Sigma^n_{i=1}L(y_u,f(x_i))=\Sigma^M_{m=1}\Sigma_{x_i\in R_m}L(y_i,f_m(x_i))$
++ Top-Down Induction Algorithm
+  + Set an initial Tree $f=(f_m,R_m,m\leq M)$ and repeat the followings
+  + Given a tree $f$, construct $\mathcal{F}_f$ that is the set of all possible trees that can be constructed from $f$
+  + Find a tree in $\mathcal{F}_f$ that minimizes the empirical risk
+  + Stop if there is no gain in emprical risk or some stoping rules are satisfied
+    + The Number of Areas, The Largest Area, Depth, ...
+
+#### Growing Regression Tree by CART
+
++ Regression Function
+  + Local Constant: $f_m(x)=c_m$
+  + Local Linear: $f_m(x)=x^T\beta_m$
++ Given a tree $f^t=(f_m^t,R_m^t,m\leq M^t)$
+  + Find the set of all possible trees, say $\mathcal{F}^t$, by splitting $R_m^t,m\leq M^t$ once: $R_m^t\rightarrow R_m^t\cap[x_j\leq c]\cup R_m^t\cap [x_j>c]$
+  + Find $f^{t+1}\in\mathcal{F}^t$ by minimizing $R_n(f_m,R_m,m\leq M)=\Sigma^n_{i=1}L(y_i,f(x_i))$
++ Local estimation of $f$ with square loss
+  + $L(y,f(x))=\Sigma^M_{m=1}(y-f_m(x))^2/[x\in R_m]$
+  + Local Constant: $\hat c_m=\bar y_m$
+  + Local Linear: $\hat{\beta}_m=(X_m^TX_m)^{-1}X_m^Ty_m$
+  + $X_m$ and $y_m$: The design matrix and target vector in $R^m$
++ Regression Function: $f(x)=\Sigma^M_{m=1}f_m(x)I[x\in R_m]$
+  + Voting: $f_m(x)=arg\max_k P(y=k|x\in R_m)$
++ $f^{t+1}\in\mathcal{F}^t$ by minimizing: $R_n(f_m,R_m,m\leq M)=\Sigma^n_{i=1}L(y_i,f(x_i))$
+  + Impurity Measure (Loss): $L(y,f(x))=\Sigma^M_{m=1}imp_m(y,f_m(x))P(x\in R_m)$
++ Impurity Index: $imp_m(y,f_m(x))$
+  + Miss-Classification Index: $1-\max_kP(y=k|x\in R_m)$
+  + Gini Index: $1-\Sigma_kP(y=k|x\in R_m)^2$
+  + Entropy Index: $-\Sigma_kP(y=k|x\in R_m)log_2P(y=k|x\in R_m)$
++ Local Estimation of $f$
+  + $\hat P(x_i\in R_m)=\Sigma_iI(x_i\in R_m)/n$
+  + $\hat f_m(x)=arg\max_k\Sigma_iI(y_i=k,x_i\in R_m)/\Sigma_iI(x_i\in R_m)$
+
+#### ECCP
+
++ Pruning a tree
+  + Too simple regression tree may be easy to interpret but fails to have good prediction accuracy, and too complex regression tree will overfit the samples
+  + Hence, pruning process is required
+  + One popular measure for pruning is the Empirical Cost-Complexity Pruning (ECCP)
++ ECCP
+  + Let $f$ be the tree after the growing and stopping steps
+  + Given $\alpha\_0$, we find the minimizer $\hat{f}\_\alpha\in\mathcal{F}$ of the ECCP, $C\_{\alpha,n}(f\_=\Sigma^M\_{m=1}\Sigma\_{x\_i\in R\_m}(y\_i-f\_m(x\_i))^2+\alpha M$
+    + $\mathcal{F}$: Set of all trees obtained by pruning $f$ once
+    + To determine $\alpha$ we may use some methods such as test error or cross validation
+  + Then the final empirical tree (estimator) $\hat{f}$ is the tree after growing, stopping and pruning
++ Pros
+  + Simple interpretation
+  + Easy handling of continuous and categorical inputs
+  + Robust to input outliers
+  + Model-free
++ Cons
+  + Low prediction accuracy
+  + Bad interpretation of large tree
+  + Unstable or high variance
+  + Bad estimation of non-squared areas
+
+### Ensemble Methods
+
+> Ensemble method is a supervised learning algorithm (technique) for combining many predictive models $\hat{f}\_k,k\leq K$ (weak learners trained individually) into one final predictive model $\hat{f}\_{ens}$ (strong learner) in the following way $\hat{f}\_{env}=\Sigma^K\_{k=1}w\_k\hat{f}\_k$ giving higher prediction accuracy
+
++ The strong learner is known to over-fit the training data more than weak learners theoretically
++ Some ensemble techniques such as the bagging tends to reduce problems related to over-fitting practically
++ Bagging procedure turns out to be a variance reduction scheme, at least for some base procedures
++ Boosting methods are primarily reducing the (model) bias of the base procedure
++ Random forest is a very different ensemble method than bagging or boosting. From the perspective of prediction, random forests is about as good as boosting, and often better than bagging.
+
+#### Bootstrap Samples
+
++ Roughly speaking, the bootstrapping is a technique of copying the triaining samples many times so that we can enrich the samples
++ The samples from the bootstrapping are called bootstrap samples
++ There are many bootstrapping schemes but, we only consider the bootstrap samples
+  + Let $(y_1,x_1),...,(y_n,x_n)$ be $n$ training samples
+  + Randomly draw a sample from the training samples $m$ times with replacement, and then we have $(y_1^*,x_1^*),...,(y_m^*,x_m^*)$, the $m$ bootstrap samples
+  + We often consider $m=n$, which is like sampling an entirely new training set
++ Not all of the training samples are included in the bootstrap samples, and are included more than oce
+  + When $m=n$, about 36.8% of the training samples are left out, for large $n$
+
+#### Bagging
+
++ Bagging is the first ensemble method [Breiman, 1996]
+  + Bagging is an abbreviation of bootstrap aggregating
+  + It stabilizes give predictive model by unifying models constructed with bootstrapped samples, enhancing unstable methods to have higher prediction accuracy
+    + Unstable: Slightly perturbing the training set can cause signifiant changes in the estimated model
+  + Among Leaarning Methods
+    + One of the most stable methods is the 1-nearest neighbor method
+    + One of the most unstable methods is regression tree
+    + Least square estimation is less stable than Huber's estimation
+    + Subset selection method is quite unstable
++ Bagging steps: Bagging constructs a unified predictive model as follows
+  + Obtain $B$ bootstrap samples of size $m$, $(y_{b1}^*,x_{b1}^*),...,(y_{bm}^*,y_{bm}^*,b\leq B$ from the training samples, $(y_1,x_1),...,(y_n,x_n)$ of size $n$
+  + Construct $B$ weak predictive models (individually) $\hat{f}_b,b\leq B$ from the $B$ bootstrap samples
+  + Unify the models into one predictive model $\hat{f}_{bag}$
+    + Averaging for regression: $\hat{f}\_{bag}=\Sigma^B\_{b=1}\hat{f}\_b/B$
+    + Voting for classification: $\hat{f}_{bab}=arg\max_k\Sigma^B_{b=1}I(\hat{f}_b=k)/B$
++ Breiman [1996] described heuristically the performance of bagging
+  + The model variance of the bagged estimator should be equal or smaller than that of the original estimator
+  + There can be a drastic variance reduction if the original estimator is unstable
++ Tibshirani (CMU lecture note) discussed some disadvantages of bagging:
+  + Loss of interpretability: The final bagged classifier from trees is not a tree, and so we forfeit the clear interpretative ability of a classification tree
+  + Computational complexity: We are essentially multiplying the work of growing a single tree by B (especially if we are using the more involved implementation that prunes and validates on the original training data)
++ An example from Ryan Tibshirani (Wisdom of crowds)
+  + Here is a simplified setup with $K=2$ classes to help understand the basic phenomenon
+  + Suppose that for a given $x$ we have $B$ independent classifies $\hat{f}_b,b\leq B$
+  + Assume each classifier has a miss-classification rate of $e=0.4$
+  + Assume w.l.o.g. that the true class at $x$ is 1 so that $P(\hat{f}_b(x)=2)=0.4$
+  + Now, we form the bagged classifier $\hat{f}_{bag}=arg\max_k\Sigma^B_{b=1}I(\hat{f}_b=k)/B$
+  + Let $B_k=\Sigma^B_{b=1}I(\hat{f}_b=k)$ be the number of votes for class $k$
+  + Notice that $B_2$ is a binomial random variable: $B_2\sim B(B,0.4)$
+  + Hence, the miss-classification rate of the bagged classifier is $E_2=P(\hat{f}_{bag}(x)=2)=P(B_2>B_1)=P(B_2\geq B/2)$
+  + Easy to see $E_2\rightarrow0$ as $B\rightarrow\infty$, in other words, $\hat{f}_{bag}$ has perfect predictive accuracy as $B\rightarrow\infty$
++ What is the problem in this exaple?
+  + Of course, the caveat here is independence
+  + The classifiers that we use in practice $\hat{f}_b,b\leq B$ are clearly not independent, because they are on very similar data sets (Bootstrap samples from the training set)
++ When will Bagging fail?
+  + Bagging a good classifier can improve predictive accuracy
+  + Bagging a bad one can seriously degrade accuracy
+
+#### Random Forest
+
+> Random Forest [Breiman, 2001] is a way to create a final prediction model by using many decision trees randomly constructed
+
++ It is a bagging the enforces more randomness
+  + Better prediction than bagging
+  + Robust to input outliers
+  + Easy computation than orignal tree: No pruning, Parallel computing, ...
++ Bagging from trees has a problem
+  + The trees produced from bootstrap samples can be highly correlated
+    + $X_i\sim(0,\sigma^2),Cor(X_i,X_j)=\rho,i,j\leq B\rightarrow Var(\bar{X}=\rho\sigma^2+(1-\rho)\sigma^2/B$
++ Random Forest vs. Bagging Trees
+  + Constructing random forest
+    + Fit a decision tree to different bootstrap samples
+    + When growing the tree, use $q<p$ inputs randomly selected in each step
+    + Average the trees
+  + constructing bagging from trees
+    + Fit a decision tree to different bootstrap samples
+    + When growing the tree, use $p$ inputs in each step
+    + Average the trees
++ Boosting
+  + Boosting is similar to bagging in that we combine many weak predictive models
+  + But, boosting is quite different to bagging and sometimes can work much better
+    + We can see that boosting uses the whole training samples but adapts weights on the training samples
+  + The boosting is developed to minimize training error as fast as possible, and known to give higher prediction accuracy
++ AdaBoost: Adaptive Boost
+  + The first boosting algorithm is the AdaBoost (Adaptive Boost) algorithm [Freund and Schapire, 1997]
+    + Initialize weights $w_i=1/n,i\leq n$
+    + For $m\leq M$, repeat followings
+      + Construct $\hat{f}_m(x)\in\lbrace-1,1\rbrace$ using weights $w_i,i\leq n$
+      + Calculate $err_m=\Sigma^n_{i=1}w_iI(y_i\neq\hat{f}_m(x_i))/\Sigma^n_{i=1}w_i$
+      + Set $c_m=log((1-err_m)/err_m)$
+      + Update weights $w_i$ by $w_i=w_iexp(c_mI(y_i\neq\hat{f}_m(x_i)))$
+    + Construct the final model as $\hat{f}(x)=sign(\Sigma^M_{m=1}c_m\hat{f}_m(x))$
+  + The most interesting part in the AdaBoost algorithm is updating the weights
+    + If $err_m\leq 1/2$ then $exp(c_m)\geq1$
+    + If $y_i\neq\hat{f}_m(x_i)$ then $w_i$ increases, else does not change
+    + Larger weights on misclassified observations
+  + Forward Stagewise Regression with Square Loss
+    + Let $\beta^1=0$ and a small $\lambda>0$
+    + For $t=1,2,...$ repeat the followings
+      + $(k,\beta_k)=arg\min_{j,\beta_j}\Sigma_i(y_i-\Sigma_Ix_{iI}\beta^t_I-x_{ij}\beta_j)^2$
+      + $\beta^{t+1}_s=\beta^t_s+\lambda sign(\beta_k)I(s=k)$
+  + Forward Stagewise Classification Tree with Exponential Loss
+    + Set $M$ trees, $T_1,...,T_M$
+    + Let $\beta^1=0$ and a small $\lambda>0$
+    + For $t=1,2,...$ repeat the followings
+      + $(k,\beta_k)=arg\min_{j,\beta_j}\Sigma_iexp(-y_i\Sigma_IT_I(x_i)\beta^t_j-y_i\beta_jT_j(x_i))$
+      + $\beta^{t+1}_s=\beta^t_s+\lambda sign(\beta_k)I(s=k)$
 
 ***
 
 # Model Comparison
+
+## Training-Validation Procedure
+
++ Way of obtaining final model by selecting extra parameter, say $\lambda$, in single learning method based on given samples $\mathcal{S}$
+  + Step 1: Preparedifferent $\lambda\_s$,say $\lambda\_k$, $k\leq K$
+  + Step 2: Divide $\mathcal{S}$ into $\mathcal{S}\_{tr}\cup\mathcal{S}\_{vd}$ at random.
+  + Step 3 (Training): Learn models $f^{\lambda\_k},k\leq K$ by using $\mathcal{S}\_{tr}$
+  + Step 4 (Validation): Calculate prediction errors by using $\mathcal{S}\_{vd}$
+    + $err(f^{\lambda\_k}=\Sigma\_{i\in\mathcal{S}\_{vd}}L(y\_i,f^{\lambda\_k}(x\_i)),k\leq K$
+  + Step 5: Select optimal $\lambda=\lambda^o$
+    + $o=arg\min\_kerr(f^{\lambda\_k})$
+  + Step 6: Learn final model $f^{\lambda\_k}$ by using the whole $\mathcal{S}$
++ Randomization
+  + You may repeat from Step 1 to Step 4 sufficiently many times obtaining averages of validation errors
+  + When the sample size is small try cross validation error
++ Complexity Control
+  + The training-validation procedure can sometimes be a way of avoiding over-fit although not the best way: small training error but high test error
+  + Some learning methods have their own way or empirical experience of selecting extra parameters
+
+## Training-Validation-Test Procedure
+
++ way of comparing two different learning methods, say $f$ and $g$ based on given samples $\mathcal{S}$
+  + Step 1: Divide $\mathcal{S}$ into $\mathcal{S}\_{tr}\cup\mathcal{S}\_{vd}\cup\mathcal{S}\_{ts}$ at random
+  + Step 2: Do training-validation procedure based on $\mathcal{S}$ into $\mathcal{S}\_{tr}\cup\mathcal{S}\_{vd}$ for each method to obtain final models, say $f^o$ and $g^o$ 
+  + Step 3 (Test): Calculate prediction errors of $f^o$ and $g^o$ by using $\mathcal{S}\_{st}$
+  + Step 4: The winner is who has smaller test error
++ Randomization
+  + You may repeat from step 1 to step 4 sufficiently many times, obtaining averages of test errors
