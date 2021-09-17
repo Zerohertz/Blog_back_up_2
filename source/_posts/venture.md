@@ -57,7 +57,6 @@ thumbnail: https://user-images.githubusercontent.com/42334717/71567443-6e60fb80-
 
 ## TIPS(Tech Incubator Program for Strtup)
 > 고급 기술인력 창업
-![](https://user-images.githubusercontent.com/42334717/71567443-6e60fb80-2b02-11ea-8a5e-24b5137f1efa.png)
 
 ## 벤처산업 직접지
 > 첨단산업을 중심으로 상호 의존적이며, 경쟁적인 기업들이 지리적으로 밀집해있는 지역
@@ -94,7 +93,6 @@ thumbnail: https://user-images.githubusercontent.com/42334717/71567443-6e60fb80-
 + 개념적 자질 : 환경 및 전체 조직의 복잡성을 명료하게 파악하여 대처하는 능력, 조직구성원들의 활동이 어떻게 조직목표에 연결되는지를 이해할 수 있는 능력과 판단력
 + 인간적 자질 : 종업원들에게 동기부여와 효과적인 리더십을 발휘하는 능력, 사람들에게 일을 시키거나 혹은 사람들과의 관계속에서 요구되는 능력과 판단력
 + 전문적 자질 : 특정한 과업을 달성하는데 있어 경험, 교육, 훈련을 통해 얻은 지식, 방법, 기술, 장비들을 이용할 줄 아는 능력
-![](https://user-images.githubusercontent.com/42334717/71609889-6327d180-2bcf-11ea-90ce-a08f5589916c.jpeg)
 
 ## 리더십
 + 특성이론 : 리더십 능력은 타고난다.
@@ -216,7 +214,6 @@ thumbnail: https://user-images.githubusercontent.com/42334717/71567443-6e60fb80-
 + 새로운 가치창출
 + 최근 기업가를 가치창출자로 정의 - 브루얏과 줄리앙
 + 기업가정신은 기술혁신을 달성하기 위해서 기회를 발견하고 평가하며 활용하는 활동 - 셰인
-![](https://user-images.githubusercontent.com/42334717/71657087-a3c74c80-2d81-11ea-99bf-3bcd5b63d6d2.jpeg)
 
 ## 한국의 기업가
 + 정주영 - 근검절약, 인간존중, 신용제일주의, 고객 최우선, 창의적, 기술개척, 도전적, 신념 강함

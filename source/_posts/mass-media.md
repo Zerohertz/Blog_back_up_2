@@ -127,8 +127,6 @@ Receiver to Sender : Feedback(표정, 몸짓, 질문, ...)
 
 ## 매스미디어의 사회적 기능
 
-![매스미디어의 기능 분석틀](https://user-images.githubusercontent.com/42334717/78126018-d4845400-744c-11ea-88d5-bbaf25a4ecf2.png)
-
 ### Surveillance(감시)
 
 > 사회에서 일어나는 여러가지 사건들에 관한 정보를 수집, 정리, 분배하는 기능(환경감시 기능), 신문이나 방송과 같은 보도매체가 일상적으로 다루는 뉴스 기능
